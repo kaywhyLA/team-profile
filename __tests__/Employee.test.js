@@ -1,13 +1,23 @@
 const Employee = require('../lib/Employee');
-const Employee = new Employee('Khaylla', '10171738', 'khayllahouston@yahoo.com');
+const employee = new Employee('10171738', 'jhouston@yahoo.com');
 
 
 test('creates employee object', () => {
-    expect(Employee.name).toBe('');
-    expect(Employee.id).toBe('');
-    expect(Employee.email).toBe('');
-
-
+    expect(employee.id).toBe('10171738');
+    expect(employee.email).toBe('jhouston@yahoo.com');
 });
+
+test('create employee id?', () => {
+    const employee = new Employee('');
+
+    expect(employee.id).toBe('10171738');
+})
+
+test('create employee email?', () => {
+    const employee = new Employee('');
+
+    expect(employee.email).toBe('jhouston@yahoo.com');
+})
+
 
 module.exports = Employee;
