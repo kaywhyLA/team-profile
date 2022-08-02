@@ -10,4 +10,7 @@ test('create manager object', () => {
 
 test('create getRole object', () => {
     expect(manager.getRole()).toBe('Manager');
-})
+});
+
+
+module.exports = Manager;
