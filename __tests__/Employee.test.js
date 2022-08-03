@@ -23,5 +23,9 @@ test('create office number object', () => {
     expect(employee.officeNumber).toBe('405');
 });
 
+test('create role object', () => {
+    expect(employee.getRole).toBe('Employee');
+});
+
 
 module.exports = Employee;
