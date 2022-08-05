@@ -109,8 +109,60 @@ const promptIntern = () => {
      `
     );
     return inquirer.prompt([{
-        type: 'input',
-        name: 'name',
-        message: 'What is the name of the intern? (Required)',
-    }])
+            type: 'input',
+            name: 'name',
+            message: 'What is the name of the intern? (Required)',
+            validate: internName => {
+                if (interName) {
+                    return true;
+                } else {
+                    console.log('Please enter the name of the intern!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'employeeId',
+            validate: employeeId => {
+                if (employeeId) {
+                    return true;
+                } else {
+                    console.log('Please enter your employee ID!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Enter your email address (Required)',
+            validate: email => {
+                if (email) {
+                    return true;
+                } else {
+                    console.log('Please enter your email address!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'school',
+            message: 'Enter your school name (Required)',
+            validate: school => {
+                if (school) {
+                    return true;
+                } else {
+                    console.log('Please enter your school name!');
+                    return false;
+                }
+            }
+        },
+    ]).then(answers => {
+        console.log(answers);
+        const intern = new Intern(answers.name, answers.employeeId, answers.email, answers.school);
+        teamMembers.push(Intern);
+        promptMenu();
+    })
 }
