@@ -2,8 +2,14 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const generateSite = require('./src/generate-site');
 const fs = require('fs');
-const jest = require('jest')
+const path = require('path');
+const OUTPUT_DIR = path.resolve(_dirname, 'output');
+const outputPath = path = path.join(OUTPUT_DIR, 'output.html');
+const teamMembers = [];
+
+
 
 const promptManager = () => {
     return inquirer.prompt([{
