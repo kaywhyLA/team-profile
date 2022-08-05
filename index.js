@@ -2,18 +2,18 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
-const generateSite = require('./src/generate-site');
-const fs = require('fs');
-const path = require('path');
-const OUTPUT_DIR = path.resolve(_dirname, 'output');
-const outputPath = path = path.join(OUTPUT_DIR, 'output.html');
+const generateSite = require('./src/generate-site.js');
+const fs = require("fs");
+const path = require("path");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "output.html");
 const teamMembers = [];
 
 
 
 const promptManager = () => {
     return inquirer.prompt([{
-            type: 'Input',
+            type: 'input',
             name: 'Name',
             message: 'What is your name?(Required)',
             validate: nameInput => {
@@ -40,15 +40,15 @@ const promptManager = () => {
         },
     ]).then(answers => {
         console.log(answers);
-        const manager = new Manager(answers.name, answers.employeeId, answers.email, answers.officeNumber, employee.role)
+        const manager = new Manager(answers.name, answers.employeeId, answers.email, answers.officeNumber, answers.employeeRole);
         teamMembers.push(manager);
-        groupMenu();
+        promptMenu();
     });
 };
 
 const promptMenu = () => {
     return inquirer.prompt([{
-            type: 'List',
+            type: 'list',
             name: 'Menu',
             message: 'Please select which option you would like to continue with:',
             choices: ['Add an engineer', 'Add an intern', 'Finish building my team']
@@ -59,7 +59,7 @@ const promptMenu = () => {
                     promptEngineer();
                     break;
                 case "add an intern":
-                    promptEngineer();
+                    promptIntern();
                     break;
                 default:
                     buildTeam();
@@ -74,7 +74,7 @@ const promptEngineer = () => {
     `);
 
     return inquirer.prompt([{
-            type: 'Input',
+            type: 'input',
             name: 'Name',
             message: 'What is the name of engineer? (Required)',
             validate: engineerName => {
@@ -87,7 +87,20 @@ const promptEngineer = () => {
             }
         },
         {
-            type: 'Input',
+            type: 'input',
+            name: 'employeeId',
+            message: 'Enter your employee ID (Required)',
+            validate: employeeId => {
+                if (employeeId) {
+                    return true;
+                } else {
+                    console.log('Please enter in your employee ID!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
             name: 'Github Username',
             message: 'Enter your Github username. (Required)',
             validate: githubUsername => {
@@ -109,9 +122,9 @@ const promptEngineer = () => {
 const promptIntern = () => {
     console.log(
         `
-    =============
+    =================
     Add a New Intern
-    =============
+    =================
      `
     );
     return inquirer.prompt([{
@@ -130,6 +143,7 @@ const promptIntern = () => {
         {
             type: 'input',
             name: 'employeeId',
+            message: 'Please enter in your employee ID (Required)',
             validate: employeeId => {
                 if (employeeId) {
                     return true;
@@ -182,10 +196,6 @@ const buildTeam = () => {
         `
     );
 
-    if (!fs.existsSync(OUTPUT_DIR)) {
-        fs.mkdirSync(OUTPUT_DIR)
-    }
-    fs.writeFileSync(outputPath, generateSite, generateSite(teamMembers), "utf-8");
 }
 
 promptManager();
