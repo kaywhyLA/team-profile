@@ -165,4 +165,21 @@ const promptIntern = () => {
         teamMembers.push(Intern);
         promptMenu();
     })
+};
+
+const buildTeam = () => {
+    console.log(
+        `
+        ===============
+        Finished building my team!
+        ===============
+        `
+    );
+
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR)
+    }
+    fs.writeFileSync(outputPath, generateSite, generateSite(teamMembers), "utf-8");
 }
+
+promptManager();
